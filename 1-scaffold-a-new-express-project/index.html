@@ -1,0 +1,54 @@
+<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.f6d53.css"/><script src="/app.f6d53.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item __active"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-i-scaffolding-a-new-project">Chapter I - Scaffolding a new project</h1>
+<p>There are many ways to create a new Express project, but in this book we&#39;ll use the official
+ <a href="https://expressjs.com/en/starter/generator.html">Express generator tool</a> to generate a new project.</p>
+<h3 id="create-a-new-express-project">Create a new Express project</h3>
+<p>Use the generator to create your project:</p>
+<pre><code class="language-bash">npm i express-generator -g
+express -v twig my-project
+cd my-project</code></pre>
+<p>The generator will create a <code>my-project</code> folder and put a basic Express app in it. Let&#39;s go over the files created:</p>
+<ul>
+<li><code>package.json</code> Define dependencies and scripts</li>
+<li><code>public/</code> is the default static assets folder of Express. By default it contains a style.css file which we will replace in chapter 3</li>
+<li><code>app.js</code> contains the actual Express application. This is where you generally define the middlewares of your Express app</li>
+<li><code>routes/</code> contains Router instances that will be added to <code>app.js</code></li>
+<li><code>views/</code> contains a few twig templates. I prefer to use twig, but choosing another template system won&#39;t make much difference for this book</li>
+<li><code>bin/www</code> this may look confusing, but it&#39;s actually just a JS file. It&#39;s used to start the server.</li>
+</ul>
+<p>Take a look at the <a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/9268371229c671d773e675ba5372edfaf6df6074">commit for this step</a></p>
+<h3 id="housekeeping">Housekeeping</h3>
+<p>The fact you&#39;re using Javascript for both server and client is pretty neat. However, it can become confusing if you
+ don&#39;t keep things separated. Separating client and server will also make defining the watched files easier for the
+  Express HMR in chapter 5.</p>
+<p>This is why we&#39;ll move all Express-related files to a new folder <code>/src/server</code>:</p>
+<ul>
+<li><code>app.js</code> &gt; <code>src/server/app.js</code></li>
+<li><code>views/</code> &gt; <code>src/server/views/</code></li>
+<li><code>routes</code> &gt; <code>src/server/routes/</code></li>
+</ul>
+<p>You&#39;ll also have to update references to this file:</p>
+<ul>
+<li><code>bin/www</code>: Reference to the <code>app.js</code> (<code>require(&#39;../src/server/app&#39;)</code>)</li>
+<li><code>src/server/app.js</code>: Reference to the public folder (<code>path.join(__dirname, &#39;../../public&#39;)</code>)</li>
+</ul>
+<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/85714693f0b293d7b1c4b521c65d69f7e84cf3a1">commit for this step</a></p>
+<h3 id="adding-gitignore">Adding .gitignore</h3>
+<p>If you want to use git in your project, consider making a <code>.gitignore</code> file first. I used the PHPStorm generator but
+the most important rules are:</p>
+<pre><code class="language-ignore">/dist
+/node_modules</code></pre>
+<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/31a14e20d90f1817d35fbc2b70238bf400a592c8">commit for this step</a></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We used the Express generator to create a new Express project and made a few preparations before we add the client-side
+configuration. You should be able to start the app and see a test page.</p>
+<pre><code>yarn install
+yarn start</code></pre><p>Point your browser to (<a href="http://localhost:3000">http://localhost:3000</a>) and see the app in action!</p>
+<p>After completing this chapter, your app should look like the sample app in the
+ <a href="https://github.com/webberig/webpack-express-ultimate-sample/tree/chapter-1">chapter-1</a> tag.</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://expressjs.com/en/starter/generator.html">https://expressjs.com/en/starter/generator.html</a></li>
+<li><a href="https://www.gitignore.io/">https://www.gitignore.io/</a></li>
+</ul>
+<p><a href="/2-setup-webpack-build-with-babel">Continue to chapter 2 - Setup Webpack for JS build with babel</a></p>
+</div></main></body>

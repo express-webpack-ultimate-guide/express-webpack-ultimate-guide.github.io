@@ -1,0 +1,48 @@
+<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.f6d53.css"/><script src="/app.f6d53.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item __active"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-vi-refresh-browser-upon-server-reload">Chapter VI - Refresh browser upon server reload</h1>
+<p>This is the final episode of the &quot;hot relading saga&quot;. It&#39;s not big change though, since all previous chapters have put
+everything in the right place to get this done quite easily.</p>
+<p>We now have a startup script that starts both webpack-dev-server and the express app. It can also reload the server
+instance, while the startup script stays alive. We can now talk to webpack-dev-server and trigger a browser reload.</p>
+<p>I recently learned about a static site generator called <a href="https://cogearjs.org/">cogear.js</a> which drew my attention
+because it uses Webpack under the hood, and it works beautifully. The CSS and JS support hot reloading, and even though
+ generating the static HTML is done outside Webpack, it manages to trigger a reload through wds - exactly what I want
+  in my Express projects.</p>
+<p>Cogear uses a slightly different approach, so I had to investigate if webpack-dev-server exposes a way to fire an event
+to the browser. I came up with this line:</p>
+<pre><code>bundler.sockWrite(bundler.sockets, &quot;content-changed&quot;);</code></pre><p>So, we add this to the chokidar change event listener in <code>bin/dev.js</code>, so we trigger a refresh after the server
+ is restarted:</p>
+<pre><code>chokidar.watch(path.join(__dirname, &quot;../src/server&quot;)).on(&#39;all&#39;, (event, at) =&gt; {
+    if (event === &#39;change&#39;) {
+        console.log(&#39;Restarting server...&#39;);
+        restart().then(() =&gt; {
+            bundler.sockWrite(bundler.sockets, &quot;content-changed&quot;);
+        });
+    }
+});</code></pre><p>We use the <code>restart</code> promise so we trigger the refresh AFTER we made sure the server is up and running!</p>
+<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/ec25242d75bc5da6ef157a30579b57ce77f925a6">commit for this step</a></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>After completing this chapter, your app should look like the sample app in the
+ <a href="https://github.com/webberig/webpack-express-ultimate-sample/tree/chapter-6">chapter-6</a> tag.</p>
+<p>This was the final step of getting ExpressJS and Webpack to join forces for the ultimate developer experience. When you
+run the server (<code>yarn dev</code>), you can now do all the things I promised in the preface. Let me just copy/paste that to
+be clear:</p>
+<h6 id="1-build-client-side-js">1. Build (client-side) JS</h6>
+<ul>
+<li>Client-side Javascript should be transpiled with <strong>Babel</strong> ✅</li>
+<li><strong>Webpack</strong> should be configured to make a JS bundle ✅</li>
+</ul>
+<h6 id="2-build-css">2. Build CSS</h6>
+<ul>
+<li>Compile <strong>SASS/SCSS</strong> ✅</li>
+<li>Pass through PostCSS, mainly to apply the <strong>Autoprefixer</strong> plugin ✅</li>
+</ul>
+<h6 id="3-hot-module-replacement">3. Hot module replacement</h6>
+<ul>
+<li>Instantly apply CSS changes without reloading the browser ✅</li>
+<li>Refresh the page upon JS changes ✅</li>
+<li>Refresh the page upon changes in the Express app ✅</li>
+</ul>
+<p>After you finish your glass of Cava (or whatever it is you do to celebrate victoriously), continue to the last chapter
+ to complete the production-build!</p>
+<p><a href="/7-extract-css-from-webpack-and-manage-assets">Continue to chapter 7 - Extract CSS from webpack and manage assets</a></p>
+</div></main></body>

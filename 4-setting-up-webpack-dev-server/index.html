@@ -1,0 +1,156 @@
+<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.f6d53.css"/><script src="/app.f6d53.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item __active"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-iv-setting-up-webpack-dev-server">Chapter IV - Setting up webpack-dev-server</h1>
+<p>Up until now we&#39;ve used the regular webpack CLI to build or watch, in which the output is written to disk (in our case
+the <code>/dist</code> folder).</p>
+<p>Webpack-dev-server is an official development tool from the Webpack team. It works very different compared to the
+ regular compiler:</p>
+<ul>
+<li>It keeps the build artifacts in memory, it doesn&#39;t actually write output to disk</li>
+<li>It works as a stand-alone web-server to serve the build artifacts</li>
+<li>It adds support to HMR (the cat&#39;s out of the bag!)</li>
+</ul>
+<p>Behind the curtains it&#39;s actually just an Express app exposing the <code>webpack-dev-middleware</code>. Why don&#39;t we just
+use that middleware directly, you wonder ? Later on, we want to be able to restart the Express app while the 
+webpack-dev-middleware stays alive and connected to your browser. That way it can signal the browser for a refresh after
+the app has been reloaded.</p>
+<p>We&#39;ll also setup a proxy middleware so requests to <code>/assets</code> are forwarded to the <code>webpack-dev-server</code>. This needs to be
+optional because using the webpack-dev-server in production is not recommended. How the assets are exposed is based on
+the NODE_ENV environment variable.</p>
+<ul>
+<li><code>NODE_ENV=production</code> &gt; Static assets middleware exposing the <code>/dist</code> folder</li>
+<li><code>NODE_ENV=development</code> (default) &gt; Proxy middleware passing request to the webpack-dev-server</li>
+</ul>
+<p>We&#39;ll create a new module (JS file) that will define a <code>startWds()</code> method to start the webpack-dev-server and
+<code>createProxy()</code> will create a proxy middleware to be included in the Express app. I decided to put those methods in
+ <code>/src/server/hmr.js</code>.</p>
+<p>So, let&#39;s get started!</p>
+<h3 id="installing-packages">Installing packages</h3>
+<pre><code>yarn add -D http-proxy webpack-dev-server</code></pre><p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/e60bc70da6dfe12ccd3dce86785c7f472fcb70ff">commit for this step</a></p>
+<h3 id="setting-up-webpack-dev-server">Setting up webpack-dev-server</h3>
+<h4 id="changes-src-server-hmr-js">Changes /src/server/hmr.js</h4>
+<pre><code>// /src/server/hmr.js
+const Webpack = require(&quot;webpack&quot;);
+const WebpackDevServer = require(&quot;webpack-dev-server&quot;);
+const webpackConfig = require(&quot;../../webpack.config.js&quot;);
+const config = require(&quot;../config&quot;);
+const httpProxy = require(&quot;http-proxy&quot;);
+
+exports.startWds = () =&gt; {
+    if (config.hmrEnabled) {
+        Object.keys(webpackConfig.entry).forEach(name =&gt; {
+            webpackConfig.entry[name] = typeof webpackConfig.entry[name] === &quot;string&quot; ?
+                [webpackConfig.entry[name]] : webpackConfig.entry[name];
+
+            webpackConfig.entry[name] = [
+                &quot;webpack/hot/dev-server&quot;,
+                `webpack-dev-server/client?http://localhost:${config.wdsPort}`,
+                ...webpackConfig.entry[name]
+            ];
+        });
+    }</code></pre><p><code>webpackConfig</code> contains your webpack configuration (located in <code>webpack.config.js</code>. If hmr is enabled, this code will
+ add extra modules to your entrypoints. These modules are the client-side implementation of HMR. They will take care 
+ of pulling changes whenever webpack has re-built and refresh the browser. You&#39;ll see a mention of
+  <code>localhost:${config.wdsPort}</code> in there. This is the host and port of the webpack-dev-server running (started below),
+   so this must match the <code>bundler.listen</code> statement below. We added the port in our config file earlier.</p>
+<pre><code>    const compiler = Webpack(webpackConfig);</code></pre><p>This will create an instance of the webpack compiler. The <code>webpack-dev-server</code> relies on this to perform the actual 
+build.</p>
+<pre><code>
+    compiler.plugin(&quot;compile&quot;, function () {
+        console.log(&quot;Bundling...&quot;);
+    });
+
+    compiler.plugin(&quot;done&quot;, function () {
+        console.log(&quot;Bundling succeeded&quot;);
+    });
+
+    const bundler = new WebpackDevServer(compiler, {
+        publicPath: config.publicPath,
+        hot: config.hmrEnabled,
+        quiet: false,
+        noInfo: true,
+        stats: {
+            colors: true
+        },
+    });</code></pre><p>Create an instance of the webpack-dev-server. We pass the webpack compiler instance and some options. The most
+noteworthy option here is <code>hot: config.hmrEnabled</code>, this will enable HMR! Can you smell the scent of success
+ already ? :-)</p>
+<pre><code>
+    bundler.listen(config.wdsPort, &quot;localhost&quot;, function () {
+        console.log(&quot;Bundling project, please wait...&quot;);
+    });</code></pre><p>This will start a webserver on the configured port (3001) which must be different than the Express app
+ (3000 by default).</p>
+<pre><code>};
+
+exports.createProxy = () =&gt; {
+    const proxy = httpProxy.createProxyServer();
+    return (req, res) =&gt; proxy.web(req, res, { target: &quot;http://localhost:3001/assets&quot; });
+};
+</code></pre><p>The <code>createProxy</code> method is pretty straightforward, it returns an Express middleware that passes each request to a proxy
+ instance which forwards the requests to the wds (<code>localhost:3001/assets</code>).</p>
+<h4 id="changes-to-bin-www">Changes to /bin/www</h4>
+<p>Remember that <code>/bin/www</code> is the script being run to start the Express app ? Now it will also start the
+ webpack-dev-server. Add following snippet to <code>/bin/www</code>:</p>
+<pre><code>const config = require(&quot;../src/config&quot;);
+
+if (!config.isProd) {
+    const hmr = require(&quot;../src/server/hmr&quot;);
+    const bundler = hmr.startWds();
+}</code></pre><h3 id="changes-to-webpack-config-js">Changes to /webpack.config.js</h3>
+<p>We also need to add a plugin to the webpack config: the
+<a href="https://webpack.js.org/plugins/hot-module-replacement-plugin/">HotModuleReplacementPlugin</a> which is
+included in the <code>webpack</code> core package itself. We&#39;ll need to add the plugin dynamically based on
+<code>config.hmrEnabled</code>:</p>
+<pre><code>const Webpack = require(&quot;webpack&quot;);
+
+var webpackConfig = {
+    ...
+    plugins: [
+    ]
+};
+
+if (config.hmrEnabled) {
+    webpackConfig.plugins.push(new Webpack.HotModuleReplacementPlugin());
+}
+module.exports = webpackConfig;</code></pre><h4 id="changes-to-src-server-app-js">Changes to /src/server/app.js</h4>
+<p>The last piece of the puzzle is the proxy middleware to the Express app. In your <code>/src/server/app.js</code> file,
+ replace the static middleware with following snippet:</p>
+<pre><code>if (config.isProd) {
+  app.use(config.publicPath, express.static(config.distFolder));
+} else {
+  const {createProxy} = require(&quot;./hmr&quot;);
+  app.use(config.publicPath, createProxy());
+}</code></pre><p>If not in production, this will apply the middleware we created in the <code>hmr.js</code> module.</p>
+<h4 id="and-done-">And... Done!</h4>
+<p>Whoa, that was a big change! Let&#39;s recap:</p>
+<ol>
+<li>We created a module that helps up start up the webpack-dev-server</li>
+<li>We added that to the startup script (if not production)</li>
+<li>We added the hmr plugin in our webpack config (if hmr enabled)</li>
+<li>We added a proxy middleware (if not production) in our Express app</li>
+</ol>
+<p>Run <code>yarn start</code> and see if it works. Try to make changes to any of the frontend files, you should see hmr
+kick in and reload your browser.</p>
+<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/7e84bb73568a61bc492c5ce0b8ce6d34f8641702">commit for this step</a></p>
+<h3 id="add-npm-scripts">Add npm scripts</h3>
+<p>We now have an Express app with 3 different modes</p>
+<ul>
+<li><code>yarn start</code> Development server with webpack-dev-server and hmr enabled</li>
+<li><code>NODE_ENV=production yarn start</code> Production server which uses static <code>/dist</code> folder to server the assets (Webpack must
+have made a build first)</li>
+<li><code>NO_HMR=1 yarn start</code> Development server with wds but hmr disabled</li>
+</ul>
+<p>We can make that a bit easier by adding scripts to our package.json:</p>
+<pre><code>  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node ./bin/www&quot;,
+    &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;,
+    &quot;start:prod&quot;: &quot;NODE_ENV=production node .bin/www&quot;,
+    &quot;start:no-hmr&quot;: &quot;NO_HMR=1 node .bin/www&quot;
+  },</code></pre><p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/97558406d198a75d4d198bdfbffb8d4ac2df3887">commit for this step</a></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We&#39;re getting really close to what we want to achieve in this book. You will now have an Express app in which the
+frontend is being processed with webpack-dev-server.</p>
+<p>Keep in mind that we&#39;re building towards a system that has 2 different modes: development and production. While we&#39;ve
+prepared a few things to make that distinction, our production build is not yet ready. We&#39;ll finish that in chapter 7.</p>
+<p>After completing this chapter, your app should look like the sample app in the
+ <a href="https://github.com/webberig/webpack-express-ultimate-sample/tree/chapter-4">chapter-4</a> tag.</p>
+<p><a href="/5-reload-server-upon-changes">Continue to chapter 5 - Reload server upon changes (the smart way)</a></p>
+</div></main></body>
