@@ -1,4 +1,4 @@
-<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.f4aa6.css"/><script src="/app.f4aa6.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item __active"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-iv-setting-up-webpack-dev-server">Chapter IV - Setting up webpack-dev-server</h1>
+<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.9e550.css"/><script src="/app.9e550.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item __active"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-iv-setting-up-webpack-dev-server">Chapter IV - Setting up webpack-dev-server</h1>
 <p>Up until now we&#39;ve used the regular webpack CLI to build or watch, in which the output is written to disk (in our case
 the <code>/dist</code> folder).</p>
 <p>Webpack-dev-server is an official development tool from the Webpack team. It works very different compared to the
@@ -24,7 +24,7 @@ the NODE_ENV environment variable.</p>
  <code>/src/server/hmr.js</code>.</p>
 <p>So, let&#39;s get started!</p>
 <h3 id="installing-packages">Installing packages</h3>
-<pre><code>yarn add -D http-proxy webpack-dev-server</code></pre><p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/e60bc70da6dfe12ccd3dce86785c7f472fcb70ff">commit for this step</a></p>
+<pre><code>yarn add -D http-proxy webpack-dev-server</code></pre><p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/e60bc70da6dfe12ccd3dce86785c7f472fcb70ff">commit for this step</a></p>
 <h3 id="setting-up-webpack-dev-server">Setting up webpack-dev-server</h3>
 <h4 id="changes-src-server-hmr-js">Changes /src/server/hmr.js</h4>
 <pre><code>// /src/server/hmr.js
@@ -129,7 +129,7 @@ module.exports = webpackConfig;</code></pre><h4 id="changes-to-src-server-app-js
 </ol>
 <p>Run <code>yarn start</code> and see if it works. Try to make changes to any of the frontend files, you should see hmr
 kick in and reload your browser.</p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/7e84bb73568a61bc492c5ce0b8ce6d34f8641702">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/7e84bb73568a61bc492c5ce0b8ce6d34f8641702">commit for this step</a></p>
 <h3 id="add-npm-scripts">Add npm scripts</h3>
 <p>We now have an Express app with 3 different modes</p>
 <ul>
@@ -144,13 +144,13 @@ have made a build first)</li>
     &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;,
     &quot;start:prod&quot;: &quot;NODE_ENV=production node .bin/www&quot;,
     &quot;start:no-hmr&quot;: &quot;NO_HMR=1 node .bin/www&quot;
-  },</code></pre><p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/97558406d198a75d4d198bdfbffb8d4ac2df3887">commit for this step</a></p>
+  },</code></pre><p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/97558406d198a75d4d198bdfbffb8d4ac2df3887">commit for this step</a></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>We&#39;re getting really close to what we want to achieve in this book. You will now have an Express app in which the
 frontend is being processed with webpack-dev-server.</p>
 <p>Keep in mind that we&#39;re building towards a system that has 2 different modes: development and production. While we&#39;ve
 prepared a few things to make that distinction, our production build is not yet ready. We&#39;ll finish that in chapter 7.</p>
 <p>After completing this chapter, your app should look like the sample app in the
- <a href="https://github.com/webberig/webpack-express-ultimate-sample/tree/chapter-4">chapter-4</a> tag.</p>
+ <a href="https://github.com/express-webpack-ultimate-guide/sample/tree/chapter-4">chapter-4</a> tag.</p>
 <p><a href="/5-reload-server-upon-changes">Continue to chapter 5 - Reload server upon changes (the smart way)</a></p>
 </div></main><footer><div class="row"><div class="column">Copyright © 2018-2019 Mathieu Maes</div><div class="column">Proudly built with &nbsp;<a href="https://cogearjs.org" target="_blank">Cogear.JS</a></div></div></footer></body>

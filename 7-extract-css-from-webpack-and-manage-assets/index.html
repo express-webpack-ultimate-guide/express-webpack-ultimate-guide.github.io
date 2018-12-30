@@ -1,4 +1,4 @@
-<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.f4aa6.css"/><script src="/app.f4aa6.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item __active"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-vii-extract-css-from-webpack-and-manage-assets">Chapter VII - Extract CSS from webpack and manage assets</h1>
+<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.9e550.css"/><script src="/app.9e550.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item __active"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-vii-extract-css-from-webpack-and-manage-assets">Chapter VII - Extract CSS from webpack and manage assets</h1>
 <p>Up until now we have focused on the developer-mode of the project. Now it&#39;s time to address the production build.</p>
 <h4 id="extracting-css-but-not-during-development-">Extracting CSS (but not during development)</h4>
 <p>We already installed the <code>style-loader</code> that compiles CSS into JS and applies it to the page when loaded. It supports
@@ -28,7 +28,7 @@ yarn add express-webpack-assets</code></pre><ul>
 <li><code>optimize-css-assets-webpack-plugin</code> minimizes the CSS (using cssnano)</li>
 <li><code>uglifyjs-webpack-plugin</code> minimizes JS</li>
 </ul>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/e7498b7313058bff8658c4b744ce11adc2c34ad4">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/e7498b7313058bff8658c4b744ce11adc2c34ad4">commit for this step</a></p>
 <h3 id="configure-manifest-in-webpack">Configure manifest in Webpack</h3>
 <p>Add the <code>assets-webpack-plugin</code> to your <code>webpack.config.js</code></p>
 <pre><code class="language-javascript">const AssetsWebpackPlugin = require(&#39;assets-webpack-plugin&#39;);
@@ -39,7 +39,7 @@ module.exports = {
     ]
 }</code></pre>
 <p>This plugin will now generate a <code>/dist/webpack-assets.json</code> file during each build.</p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/1025a8bb13ec52327349319f13841aa418f6b8fe">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/1025a8bb13ec52327349319f13841aa418f6b8fe">commit for this step</a></p>
 <h3 id="implement-assets-in-express-app">Implement assets in Express app</h3>
 <p>Now that we have a manifest, we can use that in our Express app. The <code>express-webpack-assets</code> library includes a
 middleware that will take care of that. Let&#39;s add it to our <code>/src/server/app.js</code>:</p>
@@ -55,7 +55,7 @@ middleware that will take care of that. Let&#39;s add it to our <code>/src/serve
 <pre><code class="language-twig">    &lt;script src=&quot;{{ webpack_asset(&#39;main&#39;).js  }}&quot;&gt;&lt;/script&gt;</code></pre>
 <p>The Javascript will now be loaded no matter how webpack is naming our files, as long as we keep the name of the entry
 &quot;main&quot;.</p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/1b6bf255a0188c862bd47946eb2d5286c8710d66">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/1b6bf255a0188c862bd47946eb2d5286c8710d66">commit for this step</a></p>
 <h3 id="extract-css-during-production-build">Extract CSS during production build</h3>
 <p>The next step is to configure the plugins that will extract the CSS.</p>
 <p>In <code>webpack.config.js</code>:</p>
@@ -89,7 +89,7 @@ module.exports = {
     &lt;link rel=&quot;stylesheet&quot; href=&quot;{{ webpack_asset(&#39;main&#39;).css  }}&quot; /&gt;
     {% endif %}</code></pre>
 <p>We add this conditionally because the CSS asset will not be present during development!</p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/2a5e1b7867db66c4af90a64814245842eae27d57">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/2a5e1b7867db66c4af90a64814245842eae27d57">commit for this step</a></p>
 <h3 id="add-optimization">Add optimization</h3>
 <p>We can now add minification to our <code>webpack.config.js</code>:</p>
 <pre><code class="language-javascript">const OptimizeCSSAssetsPlugin = require(&quot;optimize-css-assets-webpack-plugin&quot;);
@@ -105,7 +105,7 @@ module.exports = {
 }</code></pre>
 <p>Even though Webpack 4 has UglifyJs built-in and enabled by default, we need to add it anyway because we&#39;re overriding
  the <code>optimization.minimizer</code> default configuration.</p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/697db3d6c473dde6be221794360e660533d58f7e">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/697db3d6c473dde6be221794360e660533d58f7e">commit for this step</a></p>
 <h3 id="add-hashes-to-asset-filenames">Add hashes to asset filenames</h3>
 <p>As a final step we can configure webpack to use hashes in the output filenames:</p>
 <pre><code class="language-javascript">module.exports = {
@@ -122,11 +122,13 @@ module.exports = {
     ],
 }</code></pre>
 <p>Since we already implemented the manifest, we don&#39;t need to do anything in our Express app.</p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/954c36d2a86382ba514983db3d17d290239761b7">commit for this step</a></p>
 <h2 id="conclusion">Conclusion</h2>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/954c36d2a86382ba514983db3d17d290239761b7">commit for this step</a></p>
 <p>We now have a complete setup for both development and production. To summarize, these commands are now available to you:</p>
-<p><code>yarn start</code> Start Express app and wds, watch for changes and refresh your browser to apply them.</p>
-<p><code>yarn build</code> Create your frontend bundle. Files are saved to the <code>dist/</code> folder.</p>
-<p><code>yarn start:prod</code> Run Express in production-mode, just serving the files from the <code>dist/</code> folder. Webpack is not
- running.</p>
+<ul>
+<li><code>yarn start</code> Start Express app and wds, watch for changes and refresh your browser to apply them.</li>
+<li><code>yarn build</code> Create your frontend bundle. Files are saved to the <code>dist/</code> folder.</li>
+<li><code>yarn start:prod</code> Run Express in production-mode, just serving the files from the <code>dist/</code> folder. Webpack is not
+running.</li>
+</ul>
 </div></main><footer><div class="row"><div class="column">Copyright © 2018-2019 Mathieu Maes</div><div class="column">Proudly built with &nbsp;<a href="https://cogearjs.org" target="_blank">Cogear.JS</a></div></div></footer></body>

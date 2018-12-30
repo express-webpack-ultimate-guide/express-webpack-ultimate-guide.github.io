@@ -1,4 +1,4 @@
-<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.f4aa6.css"/><script src="/app.f4aa6.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item __active"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-iii-build-scss-using-webpack">Chapter III - Build SCSS using Webpack</h1>
+<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.9e550.css"/><script src="/app.9e550.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item __active"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-iii-build-scss-using-webpack">Chapter III - Build SCSS using Webpack</h1>
 <p>CSS prepocessors have been around for quite some time. We used to setup build tasks using Grunt or Gulp to compile 
 those files (SCSS, Less, Stylus, ...) back to CSS. Using Webpack for this job may seem a bit strange. After all, it
  compiles your CSS to JS and gets included in a Javascript bundle. Then we use an additional plugin to extract 
@@ -25,7 +25,7 @@ a single responsibility principle for a loader, and there are actually 4 steps i
 <p>Install the loaders in your project:</p>
 <pre><code>yarn add -D sass-loader node-sass css-loader postcss-loader postcss-preset-env style-loader</code></pre><p>You will notice I also added <code>postcss-preset-env</code> and <code>node-sass</code>. This is because <code>sass-loader</code> requires you to add
 <code>node-sass</code> as a dependency yourself, and <code>postcss-preset-env</code> helps us configuring postcss more easily.</p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/593588627dbc11ed67c369e854987162d283b09c">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/593588627dbc11ed67c369e854987162d283b09c">commit for this step</a></p>
 <h3 id="configure-webpack">Configure webpack</h3>
 <p>Just add a new rule to your <code>webpack.config.js</code> to use those loaders.</p>
 <pre><code>    module: {
@@ -41,7 +41,7 @@ a single responsibility principle for a loader, and there are actually 4 steps i
                 ],
             }
         ]
-    }</code></pre><p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/9f08f8262a5f37bf09416f67ce74b58cf2f8c9b8">commit for this step</a></p>
+    }</code></pre><p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/9f08f8262a5f37bf09416f67ce74b58cf2f8c9b8">commit for this step</a></p>
 <h3 id="create-your-first-scss-file">Create your first SCSS file</h3>
 <p>I moved the default CSS file <code>/pubilc/stylesheets/style.css</code> (created by the Express generator) and renamed it to
  <code>/src/client/main.scss</code>.</p>
@@ -62,13 +62,13 @@ require(&quot;./main.scss&quot;);</code></pre>
         }
     }
 };</code></pre>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/1a6c2763de9c70d31d91c62db67b3d908663a4fc">commit for these steps</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/1a6c2763de9c70d31d91c62db67b3d908663a4fc">commit for these steps</a></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>And that&#39;s it! Run <code>webpack</code>, start the server (<code>yarn start</code>) and point your browser again to <a href="http://localhost:3000">http://localhost:3000</a></p>
 <p>You webpack bundle now includes the styles of the project. You should be aware that this setup is not production-ready,
 because having your CSS inside the JS is not recommended. In chapter 7 we&#39;ll come back to the CSS and extract it from
 the bundle during production build.</p>
 <p>After completing this chapter, your app should look like the sample app in the
- <a href="https://github.com/webberig/webpack-express-ultimate-sample/tree/chapter-3">chapter-3</a> tag.</p>
+ <a href="https://github.com/express-webpack-ultimate-guide/sample/tree/chapter-3">chapter-3</a> tag.</p>
 <p><a href="/4-setting-up-webpack-dev-server">Continue to chapter 4 - Setting up webpack-dev-server</a></p>
 </div></main><footer><div class="row"><div class="column">Copyright © 2018-2019 Mathieu Maes</div><div class="column">Proudly built with &nbsp;<a href="https://cogearjs.org" target="_blank">Cogear.JS</a></div></div></footer></body>

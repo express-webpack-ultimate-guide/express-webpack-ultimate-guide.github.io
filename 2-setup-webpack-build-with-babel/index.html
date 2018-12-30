@@ -1,4 +1,4 @@
-<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.f4aa6.css"/><script src="/app.f4aa6.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item __active"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-ii-setup-webpack-for-js-build-with-babel">Chapter II - Setup Webpack for JS build with babel</h1>
+<!DOCTYPE html><head><title>Express|Webpack - The ultimate guide</title><link rel="shortcut icon" href="/favicon.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text|Roboto"><link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"><meta content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1" name="viewport"><link rel="stylesheet" href="/app.9e550.css"/><script src="/app.9e550.js"></script></head><body><header><div class="brand">Express | Webpack<small>The ultimate guide</small></div><button class="hamburger hamburger--vortex" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button></header><nav class="main-menu"><div class="main-menu_wrapper"><h2>Chapters</h2><ul><li class="main-menu_item"><a href="/preface">Preface</a></li></ul><h3>Getting started</h3><ol><li class="main-menu_item"><a href="/1-scaffold-a-new-express-project">1. Scaffold a new Express Project</a></li><li class="main-menu_item __active"><a href="/2-setup-webpack-build-with-babel">2. Setup Webpack build with Babel</a></li><li class="main-menu_item"><a href="/3-build-scss-using-webpack">3. Build SCSS using Webpack</a></li></ol><h3>Hot reloading</h3><ol><li class="main-menu_item"><a href="/4-setting-up-webpack-dev-server">4. Setting up webpack-dev-server</a></li><li class="main-menu_item"><a href="/5-reload-server-upon-changes">5. Reload server upon changes</a></li><li class="main-menu_item"><a href="/6-refresh-browser-upon-server-reload">6. Refresh browser upon server reload</a></li></ol><h3>Production</h3><ol><li class="main-menu_item"><a href="/7-extract-css-from-webpack-and-manage-assets">7. Setting up webpack-dev-server</a></li></ol><ol><li class="main-menu_item"><a href="/closing">Closing words</a></li></ol></div></nav><main><div class="container"><h1 id="chapter-ii-setup-webpack-for-js-build-with-babel">Chapter II - Setup Webpack for JS build with babel</h1>
 <p>In this chapter we&#39;ll introduce Webpack to the project. It&#39;s main purpose is to bundle JS and CSS for the
 frontend stack. Secondly we will exploit Webpack&#39;s HMR feature to the maximum to enhance the Developer experience. If
 all goes according to plan, each change will almost instantly be reflected in youw browser without haven to manually
@@ -8,7 +8,7 @@ refresh!</p>
 <p><code>webpack-cli</code> is responsible for providing a CLI
 interface. This doesn&#39;t do much as long as we don&#39;t have a configuration, so let&#39;s move on to the next step!</p>
 <p>The Babel packages are explained below.</p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/686629553ab30fc3d618507a8ea97dcd82d05910">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/686629553ab30fc3d618507a8ea97dcd82d05910">commit for this step</a></p>
 <h3 id="configuring-webpack">Configuring Webpack</h3>
 <p>Since we have some configuration options needed in different places, we should put them in a separate file ie.
 <code>/src/config.js</code>:</p>
@@ -52,7 +52,7 @@ console.log(&quot;Hello, from src/client/main.js with love&quot;);</code></pre><
 <pre><code>./node_modules/.bin/webpack</code></pre><p>After running the build, you should see that <code>/dist/main.bundle.js</code> has appeared in your project. You should see
  a result like this:</p>
 <p><img src="/chapter-2/webpack-first-run.png" alt="Webpack run"></p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/4c84fce01fae98998eb0aa3a430f367634364048">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/4c84fce01fae98998eb0aa3a430f367634364048">commit for this step</a></p>
 <h3 id="adding-the-bundle-to-your-html">Adding the bundle to your HTML</h3>
 <p>Before we can add the bundle to the webpages, we&#39;ll need to tell Express you want this folder to be served as
  &quot;static assets&quot;. Require the config to configure the static middleware with ease. I suggest putting the middleware 
@@ -67,7 +67,7 @@ app.use(config.publicPath, express.static(config.distFolder));</code></pre><p>Yo
 &lt;script src=&quot;/assets/main.bundle.js&quot;&gt;&lt;/script&gt;</code></pre><p>Make sure your app is running (<code>yarn start</code>), point your browser to the page <a href="http://localhost:3000">http://localhost:3000</a> and open the dev
 console in your browser. You should see the loving message appearing from our bundle.</p>
 <p><img src="/chapter-2/browser-with-bundle.png" alt="Browser with console output from bundle"></p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/6ac5e7b217bae8677555c9033ccaa5383b68c375">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/6ac5e7b217bae8677555c9033ccaa5383b68c375">commit for this step</a></p>
 <h3 id="adding-babel">Adding Babel</h3>
 <h4 id="webpack-loaders">Webpack loaders</h4>
 <p>Webpack knows how to handle JS files by default, but you can extend support for additional file types by adding
@@ -102,7 +102,7 @@ the webpack config so webpack knows how to include the CSS into the bundle (and 
 look for any <code>.js</code> or <code>.mjs</code> files, exclude dependencies in the <code>node_modules</code> folder and use the <code>babel-loader</code> for any
 matching files.</p>
 <p>You can test the setup by adding some ES6/7/2015 syntax in your <code>/src/client/main.js</code> and run webpack.</p>
-<p><a href="https://github.com/webberig/webpack-express-ultimate-sample/commit/24892c48874ceb6b3af79f17b29c03589e3927fc">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/24892c48874ceb6b3af79f17b29c03589e3927fc">commit for this step</a></p>
 <h2 id="tip-tricks">Tip &amp; Tricks</h2>
 <p>You can also install Webpack globally (<code>npm install -g webpack webpack-cli</code>). If you do that, you can simply run
 the <code>webpack</code> command.</p>
@@ -114,7 +114,7 @@ you make a change. However, Webpack also has a built-in watch feature. Just run 
 however is to add more automation to webpack and integrate it deeper in your app. We want webpack to build the bundle
 upon start, trigger re-build automatically upon changes and signal the browser so it reloads. </p>
 <p>After completing this chapter, your app should look like the sample app in the
- <a href="https://github.com/webberig/webpack-express-ultimate-sample/tree/chapter-2">chapter-2</a> tag.</p>
+ <a href="https://github.com/express-webpack-ultimate-guide/sample/tree/chapter-2">chapter-2</a> tag.</p>
 <p><a href="/3-build-scss-using-webpack">Continue to chapter 3 - Build SCSS using Webpack</a></p>
 <h2 id="further-reading">Further reading</h2>
 <ul>
