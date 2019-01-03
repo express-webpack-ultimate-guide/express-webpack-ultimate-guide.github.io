@@ -33,7 +33,7 @@ yarn add express-webpack-assets</code></pre><ul>
 <li><code>optimize-css-assets-webpack-plugin</code> minimizes the CSS (using cssnano)</li>
 <li><code>uglifyjs-webpack-plugin</code> minimizes JS</li>
 </ul>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/e7498b7313058bff8658c4b744ce11adc2c34ad4">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/389ff8a41b3ded2d3b8b6d2549c65b7a60f9161e">commit for this step</a></p>
 <h3 id="configure-manifest-in-webpack">Configure manifest in Webpack</h3>
 <p>Add the <code>assets-webpack-plugin</code> to your <code>webpack.config.js</code></p>
 <pre><code class="language-javascript">const AssetsWebpackPlugin = require(&#39;assets-webpack-plugin&#39;);
@@ -44,7 +44,7 @@ module.exports = {
     ]
 }</code></pre>
 <p>This plugin will now generate a <code>/dist/webpack-assets.json</code> file during each build.</p>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/1025a8bb13ec52327349319f13841aa418f6b8fe">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/d90e8ea9689fa614293a28d67f3fea2d40d92df4">commit for this step</a></p>
 <h3 id="implement-assets-in-express-app">Implement assets in Express app</h3>
 <p>Now that we have a manifest, we can use that in our Express app. The <code>express-webpack-assets</code> library includes a
 middleware that will take care of that. Let&#39;s add it to our <code>/src/server/app.js</code>:</p>
@@ -60,7 +60,7 @@ middleware that will take care of that. Let&#39;s add it to our <code>/src/serve
 <pre><code class="language-twig">    &lt;script src=&quot;{{ webpack_asset(&#39;main&#39;).js  }}&quot;&gt;&lt;/script&gt;</code></pre>
 <p>The Javascript will now be loaded no matter how webpack is naming our files, as long as we keep the name of the entry
 &quot;main&quot;.</p>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/1b6bf255a0188c862bd47946eb2d5286c8710d66">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/71a47217c7317aefb787eaa4de0d0b2c42d86f87">commit for this step</a></p>
 <h3 id="extract-css-during-production-build">Extract CSS during production build</h3>
 <p>The next step is to configure the plugins that will extract the CSS.</p>
 <p>In <code>webpack.config.js</code>:</p>
@@ -94,7 +94,7 @@ module.exports = {
     &lt;link rel=&quot;stylesheet&quot; href=&quot;{{ webpack_asset(&#39;main&#39;).css  }}&quot; /&gt;
     {% endif %}</code></pre>
 <p>We add this conditionally because the CSS asset will not be present during development!</p>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/2a5e1b7867db66c4af90a64814245842eae27d57">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/8185e6f455e2403ff0d996f6c7afbc5df1bc4e3a">commit for this step</a></p>
 <h3 id="add-optimization">Add optimization</h3>
 <p>We can now add minification to our <code>webpack.config.js</code>:</p>
 <pre><code class="language-javascript">const OptimizeCSSAssetsPlugin = require(&quot;optimize-css-assets-webpack-plugin&quot;);
@@ -110,7 +110,7 @@ module.exports = {
 }</code></pre>
 <p>Even though Webpack 4 has UglifyJs built-in and enabled by default, we need to add it anyway because we&#39;re overriding
  the <code>optimization.minimizer</code> default configuration.</p>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/697db3d6c473dde6be221794360e660533d58f7e">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/734e9aee62e0c57452bed7cbf073365e79cabbc7">commit for this step</a></p>
 <h3 id="add-hashes-to-asset-filenames">Add hashes to asset filenames</h3>
 <p>As a final step we can configure webpack to use hashes in the output filenames:</p>
 <pre><code class="language-javascript">module.exports = {
@@ -127,7 +127,7 @@ module.exports = {
     ],
 }</code></pre>
 <p>Since we already implemented the manifest, we don&#39;t need to do anything in our Express app.</p>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/954c36d2a86382ba514983db3d17d290239761b7">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/ed284c58852c5d41eb12073b9ea7a9663bba2c24">commit for this step</a></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>We now have a complete setup for both development and production. To summarize, these commands are now available to you:</p>
 <ul>

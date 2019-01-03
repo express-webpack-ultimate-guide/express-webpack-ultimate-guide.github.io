@@ -38,7 +38,7 @@ subject:</p>
 <h3 id="installing-packages">Installing packages</h3>
 <pre><code class="language-bash">yarn add -D chokidar</code></pre>
 <p>Chokidar is a library wrapping NodeJS&#39;s native fs.watch API. Nodemon also uses this library.</p>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/fd7e9af3c9b06dfcc2261aac38ddf8d80662dfed">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/db232ca8c451c4c8b72ea9b4c62b17b94ab2db4e">commit for this step</a></p>
 <h3 id="wrap-the-express-app-in-a-function">Wrap the Express app in a function</h3>
 <p>If we create a new server instance upon restart, we want a new instance of the Express app as well. To avoid the
 &quot;singleton&quot;, we must wrap the definition of the Express app in a function, so that we get a new instance everytime 
@@ -53,7 +53,7 @@ module.exports = app;</code></pre><p>After:</p>
     return app;
 }</code></pre><p>We must adapt our startup script to work with this change, so in your <code>/bin/www</code>:</p>
 <pre><code>    var app = require(&#39;../src/server/app&#39;)();</code></pre><p>(Notice the trailing brackets)</p>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/ffdb66b549c5cf33aa658c83dd2e2997de30d5e1">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/3214a047492d9be46e3ed296c20d2638a4611b90">commit for this step</a></p>
 <h3 id="implement-file-watch-and-server-restart">Implement file watch and server restart</h3>
 <p>Next we&#39;ll make significant changes to <code>/bin/www</code>. This is how it looks:</p>
 <pre><code>#!/usr/bin/env node
@@ -154,7 +154,7 @@ if (!config.isProd) {
       restart();
     }
   });</code></pre><p>Start watching the server files and call <code>restart()</code> when a file changed.</p>
-<pre><code>}</code></pre><p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/8d1a08f5465f204440c6fdb499aafb9cd06b3f2d">commit for this step</a></p>
+<pre><code>}</code></pre><p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/2453ed5b8dfa5ee88993adac41239f10bc80a8e0">commit for this step</a></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>That&#39;s it! You should now be able to start your development server by running <code>yarn start</code> or <code>npm run start</code>. Whenever
 you make a change to the server (routes, views, ...) it should automatically reload the server. However, you would

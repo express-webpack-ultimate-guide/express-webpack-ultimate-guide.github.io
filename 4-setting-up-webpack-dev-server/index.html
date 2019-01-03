@@ -81,7 +81,8 @@ noteworthy option here is <code>hot: config.hmrEnabled</code>, this will enable 
 <pre><code>
     bundler.listen(config.wdsPort, &quot;localhost&quot;, function () {
         console.log(&quot;Bundling project, please wait...&quot;);
-    });</code></pre><p>This will start a webserver on the configured port (3001) which must be different than the Express app
+    });
+    return bundler;</code></pre><p>This will start a webserver on the configured port (3001) which must be different than the Express app
  (3000 by default).</p>
 <pre><code>};
 
@@ -134,7 +135,7 @@ module.exports = webpackConfig;</code></pre><h4 id="changes-to-src-server-app-js
 </ol>
 <p>Run <code>yarn start</code> and see if it works. Try to make changes to any of the frontend files, you should see hmr
 kick in and reload your browser.</p>
-<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/7e84bb73568a61bc492c5ce0b8ce6d34f8641702">commit for this step</a></p>
+<p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/d52f155bc34ba928cc1b6c9dca68e1d29f5ae7c1">commit for this step</a></p>
 <h3 id="add-npm-scripts">Add npm scripts</h3>
 <p>We now have an Express app with 3 different modes</p>
 <ul>
@@ -149,7 +150,7 @@ have made a build first)</li>
     &quot;build&quot;: &quot;NODE_ENV=production webpack&quot;,
     &quot;start:prod&quot;: &quot;NODE_ENV=production node .bin/www&quot;,
     &quot;start:no-hmr&quot;: &quot;NO_HMR=1 node .bin/www&quot;
-  },</code></pre><p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/97558406d198a75d4d198bdfbffb8d4ac2df3887">commit for this step</a></p>
+  },</code></pre><p><a href="https://github.com/express-webpack-ultimate-guide/sample/commit/456ff0db507b846b856a54824d4dfe6b84c1e86b">commit for this step</a></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>We&#39;re getting really close to what we want to achieve in this book. You will now have an Express app in which the
 frontend is being processed with webpack-dev-server.</p>
